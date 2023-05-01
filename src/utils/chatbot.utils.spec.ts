@@ -2,10 +2,20 @@ import { sanitizeQuestion } from '@/utils/chatbot.utils';
 
 describe('sanitizeQuestion', () => {
   test('sanitizeQuestion should return a empty', () => {
-    expect(sanitizeQuestion('')).toBe('');
+    const input = '';
+    const expectedOutput = '';
+
+    const result = sanitizeQuestion(input);
+
+    expect(result).toBe(expectedOutput);
   });
 
   test('sanitizeQuestion should sanitize string', () => {
-    expect(sanitizeQuestion(' ask ')).toBe('ask');
+    const input = ' ask ';
+    const expectedOutput = 'ask';
+
+    const result = sanitizeQuestion(input);
+
+    expect(result).toBe(expectedOutput);
   });
 });

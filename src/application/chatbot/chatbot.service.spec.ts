@@ -9,7 +9,10 @@ describe('ChatbotService', () => {
 
   test('getAnswer should return a valid response', () => {
     const question = 'Qual é o seu nome?';
+    const expectedOutput = 'Meu nome é Chatbot.';
+
     const answer = chatbotService.getAnswer(question);
-    expect(answer).toContain('Meu nome é Chatbot.');
+
+    expect(answer).toContain(expectedOutput);
   });
 });

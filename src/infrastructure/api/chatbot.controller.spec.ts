@@ -1,12 +1,28 @@
-import request from 'supertest';
-import app from './server';
+import ChatbotController from '@/infrastructure/api/chatbot.controller';
+import ChatbotService from '@/application/chatbot/chatbot.service';
+import { getMockReq, getMockRes } from '@jest-mock/express';
 
-describe('ChatbotController', () => {
-  test('POST /api/chatbot/ask should return a valid response', async () => {
-    const question = 'Qual é o seu nome?';
-    const response = await request(app).post('/api/chatbot/ask').send({ question });
+describe('Chatbot Controller', () => {
+  let chatbotController: ChatbotController;
+  let chatbotService: ChatbotService;
 
-    expect(response.statusCode).toBe(200);
-    expect(response.body.answer).toContain('Meu nome é Chatbot.');
+  const { res, clearMockRes } = getMockRes();
+
+  beforeEach(() => {
+    clearMockRes();
+
+    chatbotService = new ChatbotService();
+    chatbotController = new ChatbotController(chatbotService);
+  });
+
+  it('askQuestion should return a valid response', async () => {
+    const input = { question: 'Qual é o seu nome?' };
+    const expectedOutput = 'Meu nome é Chatbot.';
+
+    const req = getMockReq({ body: input });
+
+    chatbotController.askQuestion(req, res);
+
+    expect(res.json).toHaveBeenCalledWith({ answer: expectedOutput });
   });
 });
